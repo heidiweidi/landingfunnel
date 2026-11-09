@@ -1,45 +1,23 @@
-// WhatsApp Sales Funnel Configuration
-// EION Harmony Product Details
-
+// EION Harmony - WhatsApp ordering configuration
 const CONFIG = {
-    whatsappNumber: "639000000000", // Replace with your WhatsApp number (e.g., "639123456789" for PH)
-    productName: "EION Harmony",
+    whatsappNumber: "639275335783", // from the product card (JSTCaresIntl, +63 927 533 5783) - change if orders should go elsewhere
+    productName: "EION Harmony Hot Air Blower",
     price: "₱16,000"
 };
 
-// Generate WhatsApp URL with pre-filled message
-function generateWhatsAppUrl() {
-    const message = `Hi! I'd like to order ${CONFIG.productName} for ${CONFIG.price}. Can you confirm availability and how to order?`;
-    const encodedMessage = encodeURIComponent(message);
-    return `https://wa.me/${CONFIG.whatsappNumber}?text=${encodedMessage}`;
+function whatsappUrl() {
+    const message = `Hi! I'd like to order the ${CONFIG.productName} for ${CONFIG.price}. Can you confirm availability and how to order?`;
+    return `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
 
-// Initialize WhatsApp links when DOM is ready
-function initWhatsAppLinks() {
-    const whatsappUrl = generateWhatsAppUrl();
-    
-    // Hero CTA
-    const heroCta = document.getElementById('hero-cta');
-    if (heroCta) {
-        heroCta.href = whatsappUrl;
-    }
-    
-    // Price section CTA
-    const priceCta = document.getElementById('price-cta');
-    if (priceCta) {
-        priceCta.href = whatsappUrl;
-    }
-    
-    // Sticky CTA (mobile)
-    const stickyCta = document.getElementById('sticky-cta');
-    if (stickyCta) {
-        stickyCta.href = whatsappUrl;
-    }
+function init() {
+    const url = whatsappUrl();
+    document.querySelectorAll('.js-wa').forEach(a => {
+        a.href = url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+    });
 }
 
-// Run when DOM is fully loaded
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initWhatsAppLinks);
-} else {
-    initWhatsAppLinks();
-}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+else init();
